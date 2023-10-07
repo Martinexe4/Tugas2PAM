@@ -22,5 +22,6 @@
     <string name="text_css">CSS Stylesheet Language</string>
     <string name="text_js">JavaScript Programming Language</string>
     <string name="text_sql">MySQL Database Query</string>
+    <string name="text_r">R Data Manipulation</string>
 
 </resources>

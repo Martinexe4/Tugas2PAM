@@ -1,6 +1,9 @@
 package com.example.app.ui.skill
 
+import android.content.res.TypedArray
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +27,7 @@ class SkillFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var skillArrayList : ArrayList<Skill>
-    private lateinit var imageId : Array<Int>
+    private lateinit var imageId : TypedArray
     private lateinit var heading : Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +56,6 @@ class SkillFragment : Fragment() {
         adapter = MyAdapter(skillArrayList)
         recyclerView.adapter = adapter
         searchView = view.findViewById(R.id.search_action)
-
         adapter.onItemClick = {
             navigateToDetail(it.heading)
         }
@@ -64,8 +66,9 @@ class SkillFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterList(newText)
-                return true
+                Handler(Looper.getMainLooper()).removeCallbacksAndMessages(null)
+                Handler(Looper.getMainLooper()).postDelayed({filterList(newText)},1000)
+                return false
             }
 
         })
@@ -100,45 +103,22 @@ class SkillFragment : Fragment() {
         }
     }
 
+
+
     private fun dataInitialize(){
         skillArrayList = arrayListOf<Skill>()
-
-        imageId = arrayOf(
-            R.drawable.c_logo,
-            R.drawable.cpp_logo,
-            R.drawable.py_logo,
-            R.drawable.sql_logo,
-            R.drawable.html_logo,
-            R.drawable.css_logo,
-            R.drawable.js_logo,
-
-
-        )
-
-        heading = arrayOf(
-            getString(R.string.text_c),
-            getString(R.string.text_cpp),
-            getString(R.string.text_py),
-            getString(R.string.text_sql),
-            getString(R.string.text_html),
-            getString(R.string.text_css),
-            getString(R.string.text_js),
-
-
-        )
-
+        imageId = resources.obtainTypedArray(R.array.integer_skill_array)
+        heading = resources.getStringArray(R.array.string_skill_array)
         getUserData()
+        imageId.recycle()
 
     }
 
     private fun getUserData() {
-
-        for (i in imageId.indices){
-            val skill = Skill(imageId[i],heading[i])
+        for (i in 0..<imageId.length()) {
+            val skill = Skill(imageId.getResourceId(i,0), heading[i])
             skillArrayList.add(skill)
-
         }
-
     }
 
 }
