@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">My Portfolio</string>
+    <string name="register_page">Register</string>
+    <string name="login_page">Login</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Martin Ompusunggu</string>
